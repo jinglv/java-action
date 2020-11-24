@@ -1,5 +1,9 @@
 package com.demo.action.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.Version;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,6 +16,7 @@ import java.time.LocalDateTime;
  * @date 2020/11/19
  */
 @Data
+@TableName("user")
 public class UserDO implements Serializable {
 
     /**
@@ -50,6 +55,7 @@ public class UserDO implements Serializable {
     /**
      * 数据库主键
      */
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
     /**
      * 数据的创建时间
@@ -74,5 +80,6 @@ public class UserDO implements Serializable {
     /**
      * 版本号，用于乐观锁
      */
+    @Version
     private Long version;
 }
