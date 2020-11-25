@@ -10,6 +10,7 @@ import com.demo.action.domain.dto.UserQueryDTO;
 import com.demo.action.domain.entity.UserDO;
 import com.demo.action.mapper.UserMapper;
 import com.demo.action.service.UserService;
+import com.demo.action.util.ValidatorUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -59,6 +60,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public PageResult<List<UserDTO>> query(PageQuery<UserQueryDTO> pageQuery) {
+        // 手动校验
+        ValidatorUtils.validate(pageQuery);
         // 参数构造
         Page<UserDO> page = new Page<>(pageQuery.getPageNo(), pageQuery.getPageSize());
         UserDO query = new UserDO();

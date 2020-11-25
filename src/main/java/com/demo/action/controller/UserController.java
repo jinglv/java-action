@@ -8,11 +8,15 @@ import com.demo.action.domain.dto.UserQueryDTO;
 import com.demo.action.domain.vo.UserVO;
 import com.demo.action.excaption.ErrorCodeEnum;
 import com.demo.action.service.UserService;
+import com.demo.action.util.InsertValidationGroup;
+import com.demo.action.util.updateValidationGroup;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,6 +31,7 @@ import java.util.stream.Stream;
 @Slf4j
 @RestController
 @RequestMapping("api/users")
+@Validated
 @ResponseBody
 public class UserController {
 
@@ -41,7 +46,7 @@ public class UserController {
      * POST /api/users UserDTO
      */
     @PostMapping
-    public ResponseResult<Object> save(@RequestBody UserDTO userDTO) {
+    public ResponseResult<Object> save(@Validated(InsertValidationGroup.class) @RequestBody UserDTO userDTO) {
         int save = userService.save(userDTO);
         if (save == 1) {
             return ResponseResult.success("新增成功");
@@ -57,7 +62,7 @@ public class UserController {
      * @return
      */
     @PutMapping("{id}")
-    public ResponseResult<Object> update(@PathVariable("id") Long id, @RequestBody UserDTO userDTO) {
+    public ResponseResult<Object> update(@NotNull @PathVariable("id") Long id, @Validated(updateValidationGroup.class) @RequestBody UserDTO userDTO) {
         int update = userService.update(id, userDTO);
         if (update == 1) {
             return ResponseResult.success("更新成功");
@@ -74,7 +79,7 @@ public class UserController {
      * @return
      */
     @DeleteMapping("{id}")
-    public ResponseResult<Object> delete(@PathVariable("id") Long id) {
+    public ResponseResult<Object> delete(@NotNull(message = "用户id不能为空") @PathVariable("id") Long id) {
         int delete = userService.delete(id);
         if (delete == 1) {
             return ResponseResult.success("删除成功");
@@ -90,7 +95,7 @@ public class UserController {
      * @return
      */
     @GetMapping
-    public ResponseResult<Object> query(Integer pageNo, Integer pageSize, UserQueryDTO query) {
+    public ResponseResult<Object> query(@NotNull Integer pageNo, @NotNull Integer pageSize, @Validated UserQueryDTO query) {
         // 构造查询条件
         PageQuery<UserQueryDTO> pageQuery = new PageQuery<>();
         pageQuery.setPageNo(pageNo);
