@@ -1,5 +1,6 @@
 package com.demo.action.domain.common;
 
+import com.demo.action.excaption.ErrorCodeEnum;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -45,4 +46,29 @@ public class ResponseResult<T> implements Serializable {
         return responseResult;
     }
 
+    /**
+     * 失败
+     *
+     * @param code
+     * @param message
+     * @param <T>
+     * @return
+     */
+    public static <T> ResponseResult<T> failure(String code, String message) {
+        ResponseResult<T> responseResult = new ResponseResult<>();
+        responseResult.setSuccess(Boolean.FALSE);
+        responseResult.setCode(code);
+        responseResult.setMessage(message);
+        return responseResult;
+    }
+
+    /**
+     * 失败
+     *
+     * @param <T>
+     * @return
+     */
+    public static <T> ResponseResult<T> failure(ErrorCodeEnum codeEnum) {
+        return failure(codeEnum.getCode(), codeEnum.getMessage());
+    }
 }

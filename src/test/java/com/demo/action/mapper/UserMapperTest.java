@@ -19,11 +19,11 @@ class UserMapperTest {
 
     @Autowired
     private UserMapper userMapper;
-    
+
     @Test
     void find() {
         HashMap<String, Object> param = new HashMap<>();
-        param.put("username", "username1");
+        param.put("username", "xiaohong");
         List<UserDO> userDOList = userMapper.selectByMap(param);
         log.info("{}", userDOList);
     }

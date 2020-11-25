@@ -6,3 +6,7 @@
 3. 对XxxDO实体进行注解的定义，如：数据库表名，字段定义
 4. 如需修改Plus默认配置，需实现MyBatisPlugsConfig类
 5. 如需自定义一个方法，需要实现XxxxMapper.xml，来定义自定义SQL
+
+## 自动更新系统级字段
+1. 定义公共元数据处理器
+2. 为XxxxDO配置注解
