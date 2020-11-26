@@ -12,6 +12,8 @@ import com.demo.action.util.InsertValidationGroup;
 import com.demo.action.util.updateValidationGroup;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +46,9 @@ public class UserController {
     /**
      * 用户保存操作
      * POST /api/users UserDTO
+     * 只要有数据更新，就会删除缓存
      */
+    @CacheEvict(cacheNames = "users-cache", allEntries = true)
     @PostMapping
     public ResponseResult<Object> save(@Validated(InsertValidationGroup.class) @RequestBody UserDTO userDTO) {
         int save = userService.save(userDTO);
@@ -94,8 +98,10 @@ public class UserController {
      *
      * @return
      */
+    @Cacheable(cacheNames = "users-cache")
     @GetMapping
-    public ResponseResult<Object> query(@NotNull Integer pageNo, @NotNull Integer pageSize, @Validated UserQueryDTO query) {
+    public ResponseResult<PageResult<List<UserVO>>> query(@NotNull Integer pageNo, @NotNull Integer pageSize, @Validated UserQueryDTO query) {
+        log.info("未使用缓存！");
         // 构造查询条件
         PageQuery<UserQueryDTO> pageQuery = new PageQuery<>();
         pageQuery.setPageNo(pageNo);

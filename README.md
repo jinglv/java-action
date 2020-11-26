@@ -18,4 +18,15 @@
 4. 参数校验工具类完成service层的参数校验
 
 ## 实现统一异常处理
-1. 实现一个异常处理的类，并且用@ControllerAdvice修改时
+1. 实现一个异常处理的类，并且用@ControllerAdvice修饰
+
+## 集成CaffeineCache缓存功能
+1. 学习注解：
+    - @Cacheable：缓存数据，一般用在查询方法上。将查询到的数据进行缓存
+    - @CachePut：更新方法上，将数据从缓存中进行更新
+    - @CacheEvict：删除缓存
+2. pom.xml文件引入cache相关jar包支持
+3. CacheManager Bean
+4. 使用注解，标识方法哪些需要缓存
+
+注意：Caffeine是单机版本的缓存实现，不能再集群环境下使用，目前集群下主流是使用redis来做集群缓存
