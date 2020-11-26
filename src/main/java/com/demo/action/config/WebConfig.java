@@ -36,12 +36,14 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     /**
-     * 静态资源配置
+     * 静态资源配置，浏览器可访问地址http://localhost:8080/uploads/[图片.xx/文件.xx]，展示图片或文件
      *
      * @param registry
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
+        // 配置本地文件夹目录映射
+        registry.addResourceHandler("/uploads/**")
+                .addResourceLocations("file:/Users/apple/JavaProject/java-action/uploads/");
     }
 }
