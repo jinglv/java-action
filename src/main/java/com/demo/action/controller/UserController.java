@@ -7,6 +7,7 @@ import com.demo.action.domain.dto.UserDTO;
 import com.demo.action.domain.dto.UserQueryDTO;
 import com.demo.action.domain.vo.UserVO;
 import com.demo.action.excaption.ErrorCodeEnum;
+import com.demo.action.service.ExcelExportService;
 import com.demo.action.service.UserService;
 import com.demo.action.util.InsertValidationGroup;
 import com.demo.action.util.updateValidationGroup;
@@ -38,9 +39,11 @@ import java.util.stream.Stream;
 public class UserController {
 
     private final UserService userService;
+    private final ExcelExportService excelExportService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, ExcelExportService excelExportService) {
         this.userService = userService;
+        this.excelExportService = excelExportService;
     }
 
     /**
@@ -127,5 +130,22 @@ public class UserController {
         BeanUtils.copyProperties(pageResult, listPageResult);
         listPageResult.setData(userVOList);
         return ResponseResult.success(listPageResult);
+    }
+
+    /**
+     * 用户数据导出
+     *
+     * @param query
+     * @param filename
+     * @return
+     */
+    @GetMapping("export")
+    public ResponseResult<Boolean> export(@Validated UserQueryDTO query, @NotNull String filename) {
+        log.info("接收到导出请求！filename：{}", filename);
+        // 数据导出
+        // excelExportService.export(query, filename);
+        // 异步导出
+        excelExportService.asyncExport(query, filename);
+        return ResponseResult.success(Boolean.TRUE);
     }
 }
