@@ -45,5 +45,10 @@ public class WebConfig implements WebMvcConfigurer {
         // 配置本地文件夹目录映射
         registry.addResourceHandler("/uploads/**")
                 .addResourceLocations("file:/Users/apple/JavaProject/java-action/uploads/");
+        //Swagger2映射
+        registry.addResourceHandler("/swagger-ui.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 }

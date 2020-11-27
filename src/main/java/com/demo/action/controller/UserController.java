@@ -11,6 +11,7 @@ import com.demo.action.service.ExcelExportService;
 import com.demo.action.service.UserService;
 import com.demo.action.util.InsertValidationGroup;
 import com.demo.action.util.updateValidationGroup;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CacheEvict;
@@ -35,6 +36,7 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping("api/users")
 @Validated
+@Api(value = "用户管理Controller", protocols = "https, https", hidden = false)
 @ResponseBody
 public class UserController {
 
@@ -69,6 +71,29 @@ public class UserController {
      * @return
      */
     @PutMapping("{id}")
+    @ApiOperation(value = "更新用户信息", notes = "备注说明信息", response = ResponseResult.class, httpMethod = "PUT")
+    @ApiImplicitParams({
+            @ApiImplicitParam(
+                    name = "id",
+                    value = "参数说明：用户主键",
+                    required = true,
+                    paramType = "path",
+                    dataType = "Long",
+                    example = "123456"
+            ),
+            @ApiImplicitParam(
+                    name = "userDTO",
+                    value = "用户信息",
+                    required = true,
+                    paramType = "body",
+                    dataType = "UserDTO",
+                    dataTypeClass = UserDTO.class
+            )
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0000, message = "操作成功"),
+            @ApiResponse(code = 3004, message = "更新失败")
+    })
     public ResponseResult<Object> update(@NotNull @PathVariable("id") Long id, @Validated(updateValidationGroup.class) @RequestBody UserDTO userDTO) {
         int update = userService.update(id, userDTO);
         if (update == 1) {
