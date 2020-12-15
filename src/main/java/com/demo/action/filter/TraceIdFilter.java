@@ -37,7 +37,7 @@ public class TraceIdFilter implements Filter {
         //尝试从请求信息中获取traceId信息
         String traceId = servletRequest.getParameter(TRACE_ID);
         // 为空设置默认值
-        if (StringUtils.isEmpty(traceId)) {
+        if (StringUtils.hasText(traceId)) {
             traceId = UUID.randomUUID().toString();
         }
         // 在MDC中放入traceId

@@ -62,3 +62,8 @@
 1. pom.xml引入jar包
 2. 配置Swagger2的配置类
 3. Controller及相关的实体中写对应的注解
+
+## 使用security增加请求的身份认证
+1. pom.xml把相关的jar配置好
+2. 配置文件中增加默认的身份认证信息
+3. 编写配置类
