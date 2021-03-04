@@ -36,7 +36,7 @@ public class TraceIdFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         //尝试从请求信息中获取traceId信息
         String traceId = servletRequest.getParameter(TRACE_ID);
-        // 为空设置默认值
+        // 为空设置默认值，Id为UUID自动生成
         if (StringUtils.hasText(traceId)) {
             traceId = UUID.randomUUID().toString();
         }
